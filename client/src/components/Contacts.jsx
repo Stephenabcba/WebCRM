@@ -11,7 +11,7 @@ const Contacts = (props) => {
     }
 
     return (
-        <Container className="py-3 px-1 bg-white rounded">
+        <Container className="p-3 bg-body-tertiary rounded">
             <h3 className="ms-2">Leads and Contacts</h3>
             <Table hover responsive >
                 <thead >
@@ -36,7 +36,7 @@ const Contacts = (props) => {
                             <td>({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</td>
                             <td>{contact.companyScale}</td>
                             <td>N/A</td>
-                            <td>{contact.messages.length}</td>
+                            <td>{contact.messageCount}</td>
                         </tr>
                     })}
                 </tbody>

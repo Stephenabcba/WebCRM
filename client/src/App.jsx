@@ -35,7 +35,7 @@ const ExampleToast = ({ children }) => {
 const App = () => (
   <BrowserRouter>
     <Container className="p-3">
-      <Container className="p-5 bg-light rounded-3">
+      <Container className="p-5">
         <Navigation></Navigation>
         <Switch>
           <Route path="/toast">

@@ -9,10 +9,10 @@ import {
 const Navigation = (props) => {
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="">
             <Container>
 
-                <Navbar.Brand><Link to="/" className="link-dark link-underline-opacity-0">WebCRM</Link></Navbar.Brand>
+                <Navbar.Brand><Link to="/" className="link-light link-underline-opacity-0">WebCRM</Link></Navbar.Brand>
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

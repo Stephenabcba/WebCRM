@@ -33,9 +33,9 @@ const ContactSchema = new mongoose.Schema({
         required: [true, "{PATH} is required."],
         minlength: [1, "{PATH} should not be empty."]
     },
-    messages: {
-        type: [mongoose.ObjectId],
-        default: []
+    messageCount: {
+        type: Number,
+        default: 0
     },
     location: {
         type: String,
