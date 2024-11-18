@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
+import React from "react"
 import Container from "react-bootstrap/esm/Container"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +12,7 @@ import axios from 'axios'
 
 import MessageForm from './MessageForm'
 import Messages from './Messages'
+import MessageDetail from "./MessageDetail"
 
 const ContactDetail = (props) => {
     let history = useHistory()
@@ -17,6 +20,14 @@ const ContactDetail = (props) => {
     const [messages, setMessages] = useState([])
     const [loaded, setLoaded] = useState(false)
     const { id } = useParams()
+
+    const useQuery = () => {
+        const { search } = useLocation()
+
+        return React.useMemo(() => new URLSearchParams(search), [search])
+    }
+
+    let query = useQuery()
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/contacts/' + id)
@@ -30,7 +41,7 @@ const ContactDetail = (props) => {
                     .catch(err => console.error(err))
             })
             .catch(err => console.error(err))
-    })
+    }, [])
 
     const updateDomMessages = (messageTitle) => {
         setContact({
@@ -44,26 +55,34 @@ const ContactDetail = (props) => {
                 <Stack direction="horizontal" gap={3} className="justify-content-center mb-3">
                     <h3 className="my-0 me-3">{contact.contactName}</h3>
                     <p className="my-0"><a href={"mailto:" + contact.email}>{contact.email}</a></p>
-                    <p className="ms-auto my-0">({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</p>
+                    <p className="me-auto my-0">({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</p>
                 </Stack>
                 <Container>
                     <Row>
                         <Col>
-                            <h5 className="">Company: {contact.companyName} ({contact.companyScale} sized company)</h5>
+                            <p className="">Company: {contact.companyName} ({contact.companyScale} sized company)</p>
                             <p>Location: {contact.location}</p>
                             <p>Receive Followup Reminders: {contact.followup ? "Yes" : "No"}</p>
                             <p>Associated Employee: {contact.associatedEmployee}</p>
                             <Button onClick={e => history.push("/contact/" + contact._id + "/edit")}>Edit</Button>
                         </Col>
                         <Col>
-                            <h3>MESSAGES</h3>
+                            <h4 className="mx-3">MESSAGES</h4>
                             <Messages messages={messages}></Messages>
-                            <p>Message Count: {contact.messageCount}</p>
+                            <p className="mx-3">Message Count: {contact.messageCount}</p>
+                            {query.get("message") ? (
+                                <Container>
+                                    <Button onClick={(e) => history.push("/contact/" + id)}>Send New Message</Button>
+                                    <MessageDetail messageId={query.get("message")}></MessageDetail>
+                                </Container>
+                            ) : (
+                                <Container className="px-0 mt-3">
+                                    <MessageForm contactName={contact.contactName} updateDomMessages={updateDomMessages}></MessageForm>
+                                </Container>
+                            )
+                            }
                         </Col>
                     </Row>
-                </Container>
-                <Container className="px-0 mt-3">
-                    <MessageForm contactName={contact.contactName} updateDomMessages={updateDomMessages}></MessageForm>
                 </Container>
             </Container>
             }

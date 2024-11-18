@@ -1,64 +1,23 @@
-import React, { useState } from 'react';
-
-import Toast from 'react-bootstrap/Toast';
+import React from 'react';
+import { useState, useEffect } from "react"
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Navigation from './components/Navigation';
-import Main from './components/Main';
-import ContactDetail from './components/ContactDetail';
-import ContactUpdate from './components/ContactUpdate';
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom"
+import MainView from './components/MainView';
+import { BrowserRouter } from "react-router-dom"
 
 // import './App.css';
 
-const ExampleToast = ({ children }) => {
-  const [show, toggleShow] = useState(true);
-
+const App = () => {
+  const [notifications, setNotifications] = useState(["test"])
+  const [show, setShow] = useState(false)
   return (
-    <>
-      {!show && <Button onClick={() => toggleShow(true)}>Show Toast</Button>}
-      <Toast show={show} onClose={() => toggleShow(false)}>
-        <Toast.Header>
-          <strong className="mr-auto">React-Bootstrap</strong>
-        </Toast.Header>
-        <Toast.Body>{children}</Toast.Body>
-      </Toast>
-    </>
-  );
-};
-
-const App = () => (
-  <BrowserRouter>
-    <Container className="p-3">
+    <BrowserRouter>
       <Container className="p-5">
-        <Navigation></Navigation>
-        <Switch>
-          <Route path="/toast">
-            <ExampleToast>
-              We now have Toasts
-              <span role="img" aria-label="tada">
-                🎉
-              </span>
-            </ExampleToast>
-          </Route>
-          <Route path="/contact/:id/edit">
-            <ContactUpdate></ContactUpdate>
-          </Route>
-          <Route path="/contact/:id">
-            <ContactDetail></ContactDetail>
-          </Route>
-          <Route path="/">
-            <Main></Main>
-          </Route>
-        </Switch>
+        <Navigation setShow={setShow} notifications={notifications}></Navigation>
+        <MainView show={show} setShow={setShow} notifications={notifications} setNotifications={setNotifications}></MainView>
       </Container>
-    </Container>
-  </BrowserRouter>
-);
+    </BrowserRouter>
+  )
+};
 
 export default App;
