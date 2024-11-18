@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useParams } from "react-router-dom"
 import axios from 'axios';
 import Button from 'react-bootstrap/esm/Button'
 import Form from 'react-bootstrap/Form'
 import Container from "react-bootstrap/esm/Container"
 
-const ContactForm = (props) => {
-    const { addToDom } = props
+const ContactUpdate = (props) => {
+    let history = useHistory()
+    const { id } = useParams();
+
     //keep track of what is being typed via useState hook
     const [contactName, setContactName] = useState("")
     const [companyName, setCompanyName] = useState("")
@@ -23,12 +26,26 @@ const ContactForm = (props) => {
         }
     }
 
-    const onSubmitHandler = e => {
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/contacts/' + id)
+            .then(res => {
+                setContactName(res.data.contact.contactName)
+                setCompanyName(res.data.contact.companyName)
+                setEmail(res.data.contact.email)
+                setAssociatedEmployee(res.data.contact.associatedEmployee)
+                setFollowup(res.data.contact.followup)
+                setPhoneNumber(res.data.contact.phoneNumber)
+                setLocation(res.data.contact.location)
+                setCompanyScale(res.data.contact.companyScale)
+            })
+    }, []);
+
+
+    const updateContact = e => {
         //prevent default behavior of the submit
         e.preventDefault();
         console.log("submitted")
-        //make a post request to create a new person
-        axios.post('http://localhost:8000/api/contacts', {
+        axios.put('http://localhost:8000/api/contacts/' + id, {
             contactName,
             companyName,
             email,
@@ -40,23 +57,15 @@ const ContactForm = (props) => {
         })
             .then(res => {
                 console.log(res)
-                addToDom(res.data.contact)
-                setContactName("")
-                setCompanyName("")
-                setEmail("")
-                setAssociatedEmployee("Stephen")
-                setFollowup(true)
-                setPhoneNumber("")
-                setLocation("")
-                setCompanyScale("Small")
+                history.push('http://localhost:8000/api/contacts/' + id)
             })
             .catch(err => console.log(err))
     }
     //onChange to update contactName and lastName
     return (
         <Container className='px-5 mt-3'>
-            <h2>Create a new contact</h2>
-            <Form onSubmit={onSubmitHandler} className="p-3">
+            <h2>Update contact</h2>
+            <Form onSubmit={updateContact} className="p-3">
                 <Form.Group className="mb-3" controlId="formBasicAssociatedEmployee">
                     <Form.Label>Associated Employee</Form.Label>
                     <Form.Control placeholder="Enter name of the employee associated with this contact" onChange={(e) => setAssociatedEmployee(e.target.value)} value={associatedEmployee} />
@@ -97,9 +106,9 @@ const ContactForm = (props) => {
                         checked={followup}
                     />
                 </Form.Group>
-                <Button variant="primary" type="submit">Create</Button>
+                <Button variant="primary" type="submit">Save</Button>
             </Form>
         </Container>
     )
 }
-export default ContactForm;
+export default ContactUpdate;

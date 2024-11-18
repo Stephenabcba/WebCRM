@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/esm/Container"
 import { useParams } from "react-router-dom"
 import { useHistory } from "react-router-dom"
-
 import { useState, useEffect } from "react"
 import Button from 'react-bootstrap/esm/Button'
+import Stack from 'react-bootstrap/Stack';
 import axios from 'axios'
 
 const ContactDetail = (props) => {
@@ -21,15 +21,17 @@ const ContactDetail = (props) => {
             .catch(err => console.error(err))
     })
     return (
-        <Container>
+        <Container className="mt-3">
             {loaded && <Container>
-                <h2>{contact.contactName}</h2>
-                <h4>Company: {contact.companyName} ({contact.companyScale} sized company)</h4>
-                <p>Email: <a href={"mailto:" + contact.email}>{contact.email}</a></p>
-                <p>Want Followups: {contact.followup ? "Yes" : "No"}</p>
+                <Stack direction="horizontal" gap={3} className="justify-content-center mb-3">
+                    <h3 className="my-0 me-3">{contact.contactName}</h3>
+                    <p className="my-0"><a href={"mailto:" + contact.email}>{contact.email}</a></p>
+                    <h4 className="ms-auto my-0">Company: {contact.companyName} ({contact.companyScale} sized company)</h4>
+                </Stack>
                 <p>Phone Number: ({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</p>
-                <p>Message Count: {contact.messages.length}</p>
+                <p>Want Followups: {contact.followup ? "Yes" : "No"}</p>
                 <p>Location: {contact.location}</p>
+                <p>Message Count: {contact.messages.length}</p>
                 <p>Associated Employee: {contact.associatedEmployee}</p>
                 <Button onClick={e => history.push("/contact/" + contact._id + "/edit")}>Edit</Button>
             </Container>

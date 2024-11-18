@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Navigation from './components/Navigation';
 import Main from './components/Main';
 import ContactDetail from './components/ContactDetail';
+import ContactUpdate from './components/ContactUpdate';
 import {
   BrowserRouter,
   Switch,
@@ -46,7 +47,7 @@ const App = () => (
             </ExampleToast>
           </Route>
           <Route path="/contact/:id/edit">
-            <p>edit page in progress</p>
+            <ContactUpdate></ContactUpdate>
           </Route>
           <Route path="/contact/:id">
             <ContactDetail></ContactDetail>
