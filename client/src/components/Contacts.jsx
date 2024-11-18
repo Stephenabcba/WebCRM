@@ -1,7 +1,7 @@
-import { Redirect } from "react-router-dom"
 import Table from "react-bootstrap/Table"
 import Container from "react-bootstrap/esm/Container"
 import { useHistory } from "react-router-dom"
+
 
 
 const Contacts = (props) => {
@@ -11,10 +11,9 @@ const Contacts = (props) => {
     }
 
     return (
-        <Container className="py-2">
-
-            <Table hover responsive>
-                <thead>
+        <Container className="py-3 px-1 bg-white rounded">
+            <Table hover responsive >
+                <thead >
                     <tr>
                         <th>Associated Employee</th>
                         <th>Contact Name</th>
@@ -27,16 +26,18 @@ const Contacts = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onClick={(e) => viewContact(1)}>
-                        <td>Stephen</td>
-                        <td>John Doe</td>
-                        <td>HP</td>
-                        <td>johnd@gmail.com</td>
-                        <td>2024-09-03</td>
-                        <td>123-456-789</td>
-                        <td>10</td>
-                        <td>Small</td>
-                    </tr>
+                    {props.contacts.map((contact, idx) => {
+                        return <tr onClick={(e) => viewContact(contact._id)}>
+                            <td>{contact.associatedEmployee}</td>
+                            <td>{contact.contactName}</td>
+                            <td>{contact.companyName}</td>
+                            <td>{contact.email}</td>
+                            <td>N/A</td>
+                            <td>({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</td>
+                            <td>{contact.messages.length}</td>
+                            <td>{contact.companyScale}</td>
+                        </tr>
+                    })}
                 </tbody>
             </Table>
         </Container>

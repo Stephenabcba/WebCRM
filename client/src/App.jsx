@@ -4,7 +4,7 @@ import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Navigation from './components/Navigation';
-import Contacts from './components/Contacts';
+import Main from './components/Main';
 import {
   BrowserRouter,
   Switch,
@@ -33,7 +33,7 @@ const ExampleToast = ({ children }) => {
 const App = () => (
   <BrowserRouter>
     <Container className="p-3">
-      <Container className="p-5 mb-4 bg-light rounded-3">
+      <Container className="p-5 bg-light rounded-3">
         <Navigation></Navigation>
         <Switch>
           <Route path="/toast">
@@ -44,8 +44,11 @@ const App = () => (
               </span>
             </ExampleToast>
           </Route>
+          <Route path="/contact/:id">
+            <p>IN PROGRESS</p>
+          </Route>
           <Route path="/">
-            <Contacts></Contacts>
+            <Main></Main>
           </Route>
         </Switch>
       </Container>
