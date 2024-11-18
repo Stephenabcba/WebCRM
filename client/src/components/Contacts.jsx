@@ -18,9 +18,9 @@ const Contacts = (props) => {
                     <tr>
                         <th>Associated Employee</th>
                         <th>Contact Name</th>
-                        <th>Company</th>
                         <th>Email</th>
                         <th>Phone Number</th>
+                        <th>Company</th>
                         <th>Company Scale</th>
                         {/* <th>Last Contact Time</th> */}
                         <th>Message Count</th>
@@ -31,9 +31,9 @@ const Contacts = (props) => {
                         return <tr key={idx} onClick={(e) => viewContact(contact._id)}>
                             <td>{contact.associatedEmployee}</td>
                             <td>{contact.contactName}</td>
-                            <td>{contact.companyName}</td>
                             <td>{contact.email}</td>
                             <td>({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</td>
+                            <td>{contact.companyName}</td>
                             <td>{contact.companyScale}</td>
                             {/* <td>N/A</td> */}
                             <td>{contact.messageCount}</td>

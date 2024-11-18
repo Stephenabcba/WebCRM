@@ -41,6 +41,7 @@ const ContactForm = (props) => {
             .then(res => {
                 console.log(res)
                 addToDom(res.data.contact)
+                props.incrementUpdateNotif()
                 setContactName("")
                 setCompanyName("")
                 setEmail("")

@@ -27,7 +27,7 @@ const MainView = (props) => {
                 setLoaded(true)
             })
             .catch(err => console.error(err));
-    }, [updateNotif]);
+    }, []);
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/checkFollowup')
@@ -39,6 +39,10 @@ const MainView = (props) => {
             })
             .catch(err => console.error(err));
     }, [updateNotif]);
+
+    const incrementUpdateNotif = () => {
+        setUpdateNotif(updateNotif + 1)
+    }
 
     const removeFromDom = contactId => {
         setContacts(contacts.filter(contact => contact._id != contactId));
@@ -58,13 +62,13 @@ const MainView = (props) => {
                     <ContactUpdate />
                 </Route>
                 <Route path="/contact/:id">
-                    <ContactDetail setUpdateNotif={setUpdateNotif} updateNotif={updateNotif} />
+                    <ContactDetail incrementUpdateNotif={incrementUpdateNotif} />
                 </Route>
                 <Route path="/">
                     <Container className="py-2">
                         {!loaded && <p>Loading contacts...</p>}
                         {loaded && <Contacts contacts={contacts} removeFromDom={removeFromDom}></Contacts>}
-                        <ContactForm addToDom={addToDom}></ContactForm>
+                        <ContactForm addToDom={addToDom} incrementUpdateNotif={incrementUpdateNotif}></ContactForm>
                     </Container>
                 </Route>
             </Switch>

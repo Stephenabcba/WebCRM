@@ -52,7 +52,7 @@ const ContactDetail = (props) => {
             ...messages,
             message
         ])
-        props.setUpdateNotif(props.updateNotif + 1)
+        props.incrementUpdateNotif()
     }
     return (
         <Container className="mt-3">
