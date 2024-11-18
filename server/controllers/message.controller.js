@@ -56,8 +56,6 @@ module.exports.checkFollowups = (req, res) => {
                 return new Promise(resolve => {
                     Message.find({ associatedContact: contact._id }).sort({ _id: -1 }).limit(1)
                         .then(lastMessage => {
-                            console.log(contact.contactName)
-                            console.log(lastMessage.length)
                             if (lastMessage.length > 0) {
                                 const now = Date.now().valueOf()
                                 const messageDate = new Date(lastMessage[0].createdAt)

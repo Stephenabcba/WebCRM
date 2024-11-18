@@ -62,7 +62,7 @@ const MainView = (props) => {
                     <ContactUpdate />
                 </Route>
                 <Route path="/contact/:id">
-                    <ContactDetail incrementUpdateNotif={incrementUpdateNotif} />
+                    <ContactDetail incrementUpdateNotif={incrementUpdateNotif} removeFromDom={removeFromDom} />
                 </Route>
                 <Route path="/">
                     <Container className="py-2">

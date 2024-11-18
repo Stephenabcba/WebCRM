@@ -54,6 +54,16 @@ const ContactDetail = (props) => {
         ])
         props.incrementUpdateNotif()
     }
+
+    const handleDelete = (e) => {
+        axios.delete('http://localhost:8000/api/contacts/' + id)
+            .then(res => {
+                props.incrementUpdateNotif()
+                props.removeFromDom(id)
+                history.push("/")
+            })
+            .catch(err => console.error(err))
+    }
     return (
         <Container className="mt-3">
             {loaded && <Container>
@@ -69,7 +79,10 @@ const ContactDetail = (props) => {
                             <p>Location: {contact.location}</p>
                             <p>Receive Followup Reminders: {contact.followup ? "Yes" : "No"}</p>
                             <p>Associated Employee: {contact.associatedEmployee}</p>
-                            <Button onClick={e => history.push("/contact/" + contact._id + "/edit")}>Edit</Button>
+                            <Stack direction="horizontal" gap={3}>
+                                <Button onClick={e => history.push("/contact/" + contact._id + "/edit")}>Edit</Button>
+                                <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                            </Stack>
                         </Col>
                         <Col>
                             <h4 className="mx-3">MESSAGES</h4>
