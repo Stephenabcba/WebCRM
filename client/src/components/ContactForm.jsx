@@ -54,7 +54,7 @@ const ContactForm = (props) => {
     }
     //onChange to update contactName and lastName
     return (
-        <Container className='px-5'>
+        <Container className='px-5 mt-3'>
             <h2>Create a new contact</h2>
             <Form onSubmit={onSubmitHandler} className="p-3">
                 <Form.Group className="mb-3" controlId="formBasicAssociatedEmployee">

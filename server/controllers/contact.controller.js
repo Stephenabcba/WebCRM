@@ -20,8 +20,8 @@ module.exports.findAllContacts = (req, res) => {
 }
 
 module.exports.findOneContactById = (req, res) => {
-    Contact.findOne({ _id: request.params.id })
-        .then(foundContact => response.json({ contact: foundContact }))
+    Contact.findOne({ _id: req.params.id })
+        .then(foundContact => res.json({ contact: foundContact }))
         .catch(err => res.status(400).json(err))
 }
 
