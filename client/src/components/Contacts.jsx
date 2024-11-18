@@ -27,7 +27,7 @@ const Contacts = (props) => {
                 </thead>
                 <tbody>
                     {props.contacts.map((contact, idx) => {
-                        return <tr onClick={(e) => viewContact(contact._id)}>
+                        return <tr key={idx} onClick={(e) => viewContact(contact._id)}>
                             <td>{contact.associatedEmployee}</td>
                             <td>{contact.contactName}</td>
                             <td>{contact.companyName}</td>
