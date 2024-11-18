@@ -43,11 +43,16 @@ const ContactDetail = (props) => {
             .catch(err => console.error(err))
     }, [])
 
-    const updateDomMessages = (messageTitle) => {
+    const updateDomMessages = (message) => {
         setContact({
             ...contact,
-            messagesCount: contact.messageCount + 1
+            messageCount: contact.messageCount + 1
         })
+        setMessages([
+            ...messages,
+            message
+        ])
+        props.setUpdateNotif(props.updateNotif + 1)
     }
     return (
         <Container className="mt-3">
@@ -68,7 +73,7 @@ const ContactDetail = (props) => {
                         </Col>
                         <Col>
                             <h4 className="mx-3">MESSAGES</h4>
-                            <Messages messages={messages}></Messages>
+                            <Messages messages={messages} contactName={contact.contactName}></Messages>
                             <p className="mx-3">Message Count: {contact.messageCount}</p>
                             {query.get("message") ? (
                                 <Container>

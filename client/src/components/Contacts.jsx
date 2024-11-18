@@ -22,7 +22,7 @@ const Contacts = (props) => {
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Company Scale</th>
-                        <th>Last Contact Time</th>
+                        {/* <th>Last Contact Time</th> */}
                         <th>Message Count</th>
                     </tr>
                 </thead>
@@ -35,7 +35,7 @@ const Contacts = (props) => {
                             <td>{contact.email}</td>
                             <td>({contact.phoneNumber.slice(0, 3)}){contact.phoneNumber.slice(3, 6)}-{contact.phoneNumber.slice(6, 10)}</td>
                             <td>{contact.companyScale}</td>
-                            <td>N/A</td>
+                            {/* <td>N/A</td> */}
                             <td>{contact.messageCount}</td>
                         </tr>
                     })}

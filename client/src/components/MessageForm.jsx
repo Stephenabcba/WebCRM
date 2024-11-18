@@ -24,7 +24,7 @@ const MessageForm = (props) => {
             toContact: true,
             associatedContact: id
         })
-            .then(res => {
+            .then(resMessage => {
                 // console.log(res)
                 setMessageTitle("")
                 setMessageBody("")
@@ -32,7 +32,7 @@ const MessageForm = (props) => {
                     $inc: { messageCount: 1 }
                 })
                     .then(res => {
-                        updateDomMessages(res.data.message.messageTitle)
+                        updateDomMessages(resMessage.data.message)
                     })
                     .catch(err => console.log(err))
             })

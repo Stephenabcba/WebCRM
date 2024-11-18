@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom"
 // import './App.css';
 
 const App = () => {
-  const [notifications, setNotifications] = useState(["test"])
+  const [notifications, setNotifications] = useState([])
   const [show, setShow] = useState(false)
   return (
     <BrowserRouter>

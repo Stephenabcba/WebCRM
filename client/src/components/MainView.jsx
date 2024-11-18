@@ -18,6 +18,7 @@ const MainView = (props) => {
 
     const [contacts, setContacts] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const [updateNotif, setUpdateNotif] = useState(0)
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/contacts')
@@ -26,7 +27,18 @@ const MainView = (props) => {
                 setLoaded(true)
             })
             .catch(err => console.error(err));
-    }, []);
+    }, [updateNotif]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/checkFollowup')
+            .then(res => {
+                const people = res.data.followups
+                props.setNotifications(people.map((person, idx) => {
+                    return (`It's time to follow up with ${person}!`)
+                }))
+            })
+            .catch(err => console.error(err));
+    }, [updateNotif]);
 
     const removeFromDom = contactId => {
         setContacts(contacts.filter(contact => contact._id != contactId));
@@ -43,10 +55,10 @@ const MainView = (props) => {
         <Container>
             <Switch>
                 <Route path="/contact/:id/edit">
-                    <ContactUpdate></ContactUpdate>
+                    <ContactUpdate />
                 </Route>
                 <Route path="/contact/:id">
-                    <ContactDetail></ContactDetail>
+                    <ContactDetail setUpdateNotif={setUpdateNotif} updateNotif={updateNotif} />
                 </Route>
                 <Route path="/">
                     <Container className="py-2">
@@ -54,7 +66,6 @@ const MainView = (props) => {
                         {loaded && <Contacts contacts={contacts} removeFromDom={removeFromDom}></Contacts>}
                         <ContactForm addToDom={addToDom}></ContactForm>
                     </Container>
-
                 </Route>
             </Switch>
             <Notification show={props.show} setShow={props.setShow} notifications={props.notifications}></Notification>
