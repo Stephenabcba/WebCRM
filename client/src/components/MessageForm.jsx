@@ -13,6 +13,7 @@ const MessageForm = (props) => {
 
     const [messageTitle, setMessageTitle] = useState("")
     const [messageBody, setMessageBody] = useState("")
+    const [realEmail, setRealEmail] = useState(false)
 
 
     const onSubmitHandler = (e) => {
@@ -22,12 +23,15 @@ const MessageForm = (props) => {
             messageTitle,
             messageBody,
             toContact: true,
-            associatedContact: id
+            associatedContact: id,
+            contactEmail: props.contactEmail,
+            realEmail
         })
             .then(resMessage => {
                 // console.log(res)
                 setMessageTitle("")
                 setMessageBody("")
+                setRealEmail(false)
                 axios.put('http://localhost:8000/api/contacts/' + id, {
                     $inc: { messageCount: 1 }
                 })
@@ -42,13 +46,21 @@ const MessageForm = (props) => {
     return <Container>
         <h5>Send a new message to {contactName}:</h5>
         <Form onSubmit={onSubmitHandler}>
-            <Form.Group className='my-3'>
+            <Form.Group className='my-3' controlId="formBasicMessageTitle">
                 <Form.Label>Title</Form.Label>
                 <Form.Control placeholder='Enter the title for the message' onChange={(e) => setMessageTitle(e.target.value)} value={messageTitle} />
             </Form.Group>
-            <Form.Group className='my-3'>
+            <Form.Group className='my-3' controlId="formBasicMessageBody">
                 <Form.Label>Message Body</Form.Label>
                 <Form.Control as="textarea" rows={3} placeholder='Body of the Message' onChange={(e) => setMessageBody(e.target.value)} value={messageBody} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicSendEmail">
+                <Form.Check
+                    type="switch"
+                    onChange={(e) => setRealEmail(e.target.checked)}
+                    label="Send the message as actual email?"
+                    checked={realEmail}
+                />
             </Form.Group>
             <Button vairant="primary" type="submit">Send Message</Button>
         </Form>

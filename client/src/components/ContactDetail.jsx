@@ -95,7 +95,7 @@ const ContactDetail = (props) => {
                                 </Container>
                             ) : (
                                 <Container className="px-0 mt-3">
-                                    <MessageForm contactName={contact.contactName} updateDomMessages={updateDomMessages}></MessageForm>
+                                    <MessageForm contactName={contact.contactName} updateDomMessages={updateDomMessages} contactEmail={contact.email}></MessageForm>
                                 </Container>
                             )
                             }

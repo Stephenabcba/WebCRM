@@ -1,15 +1,40 @@
 const { request } = require('express')
 const Contact = require('../models/contact.model')
 const Message = require('../models/message.model')
+var nodemailer = require('nodemailer')
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_ACC,
+        pass: process.env.EMAIL_PASS
+    }
+})
+
+const sendEmail = (email, title, body) => {
+    var mailOptions = {
+        from: `"Stephen Lee" ${process.env.EMAIL_ACC}`,
+        to: email,
+        subject: title,
+        text: body
+    }
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
 
 module.exports.createNewMessage = (req, res) => {
-    updatedForm = {
-        ...req.body,
-        last_Message: null,
-        messages: [],
-    }
-    Message.create(updatedForm)
-        .then(newMessage => res.json({ message: newMessage }))
+    Message.create(req.body)
+        .then(newMessage => {
+            if (req.body.realEmail) {
+                sendEmail(req.body.contactEmail, req.body.messageTitle, req.body.messageBody)
+            }
+            return res.json({ message: newMessage })
+        })
         .catch(err => res.status(400).json(err))
 }
 
