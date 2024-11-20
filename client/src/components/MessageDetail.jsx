@@ -19,7 +19,7 @@ const MessageDetail = (props) => {
                 setMessage(res.data.message)
             })
             .catch(err => console.error(err))
-    }, [])
+    }, [messageId])
     return <Container className="my-3 bg-secondary p-3 rounded">
         {message.associatedContact ? (
             <Container>
