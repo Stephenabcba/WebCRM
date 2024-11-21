@@ -82,6 +82,11 @@ npm run dev
     - There has been no message correspondance with the contact
     - The last message time with the contact is more than 7 days prior to current time
 
+## Project Demo
+https://github.com/user-attachments/assets/3faa3c44-e5b6-4b77-aacf-647df2f7bb72
+
+
+
 ## Limitations
 - The app currently does not provide any authentication & authorization functionalities
   - A login/auth function should be implemented before this is used in an enterprise environment
